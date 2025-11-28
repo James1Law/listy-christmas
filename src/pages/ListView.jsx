@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { getList, getListItems, addItem, updateItem, deleteItem } from '../lib/db';
+import { getList, getListItems, addItem, updateItem, deleteItem, deleteList } from '../lib/db';
 import { Trash2, Gift, Check, ExternalLink } from 'lucide-react';
 
 export default function ListView() {
@@ -42,7 +42,9 @@ export default function ListView() {
             price: newItemPrice,
             isBought: false,
             boughtBy: null,
-            boughtByName: null
+            boughtByName: null,
+            createdBy: currentUser.uid,
+            createdByName: currentUser.displayName || currentUser.email
         });
 
         setNewItemName('');
@@ -55,6 +57,13 @@ export default function ListView() {
         if (window.confirm('Are you sure you want to delete this item?')) {
             await deleteItem(itemId);
             loadData();
+        }
+    }
+
+    async function handleDeleteList() {
+        if (window.confirm('Are you sure you want to delete this entire list? This cannot be undone.')) {
+            await deleteList(listId);
+            navigate('/');
         }
     }
 
@@ -85,8 +94,26 @@ export default function ListView() {
             </button>
 
             <header style={{ marginBottom: '30px', borderBottom: '1px solid #eee', paddingBottom: '20px' }}>
-                <h1>{list.title}</h1>
-                <p style={{ color: '#666' }}>Owned by {isOwner ? 'You' : list.ownerName}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                        <h1>{list.title}</h1>
+                        <p style={{ color: '#666', margin: 0 }}>Owned by {isOwner ? 'You' : list.ownerName}</p>
+                    </div>
+                    {isOwner && (
+                        <button
+                            onClick={handleDeleteList}
+                            style={{
+                                backgroundColor: '#fff',
+                                color: '#d42426',
+                                border: '2px solid #d42426',
+                                padding: '8px 16px',
+                                fontSize: '0.9rem'
+                            }}
+                        >
+                            Delete List
+                        </button>
+                    )}
+                </div>
             </header>
 
             {isOwner && (
@@ -153,7 +180,7 @@ export default function ListView() {
                         </div>
 
                         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            {isOwner ? (
+                            {item.createdBy === currentUser.uid ? (
                                 <button
                                     onClick={() => handleDeleteItem(item.id)}
                                     style={{ backgroundColor: '#fff', color: '#d42426', padding: '8px', border: '1px solid #d42426' }}

@@ -86,31 +86,57 @@ export default function Home() {
 
     return (
         <div className="container">
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <div>
-                    <h1>Christmas List App</h1>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '5px' }}>
-                        <p style={{ margin: 0, fontSize: '0.85rem', color: '#666' }}>
-                            Family ID: <code style={{ backgroundColor: '#f0f0f0', padding: '2px 6px', borderRadius: '3px' }}>{userProfile.familyId}</code>
-                        </p>
-                        <button
-                            onClick={copyFamilyId}
-                            style={{
-                                backgroundColor: copied ? '#165b33' : 'transparent',
-                                color: copied ? '#fff' : '#666',
-                                border: '1px solid #ddd',
-                                padding: '4px 8px',
-                                fontSize: '0.75rem',
+            <header style={{ marginBottom: '2rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px', gap: '10px' }}>
+                    <div style={{ flex: '1 1 auto', minWidth: '200px' }}>
+                        <h1 style={{ margin: '0 0 5px 0' }}>Christmas List App</h1>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: '#666' }}>
+                            <span>Family ID:</span>
+                            <div style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '4px'
-                            }}
-                        >
-                            {copied ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}
-                        </button>
+                                gap: '6px',
+                                backgroundColor: '#f0f0f0',
+                                padding: '4px 6px',
+                                borderRadius: '4px',
+                                flex: '0 1 auto',
+                                minWidth: 0
+                            }}>
+                                <code style={{
+                                    fontSize: '0.7rem',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'auto',
+                                    display: 'block',
+                                    maxWidth: '150px',
+                                    scrollbarWidth: 'none',
+                                    msOverflowStyle: 'none'
+                                }}>
+                                    {userProfile.familyId}
+                                </code>
+                                <button
+                                    onClick={copyFamilyId}
+                                    title={copied ? "Copied!" : "Copy Family ID"}
+                                    style={{
+                                        backgroundColor: copied ? '#165b33' : 'transparent',
+                                        color: copied ? '#fff' : '#666',
+                                        border: 'none',
+                                        padding: '4px',
+                                        fontSize: '0.75rem',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        minWidth: 'auto',
+                                        justifyContent: 'center',
+                                        flexShrink: 0,
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    {copied ? <Check size={14} /> : <Copy size={14} />}
+                                </button>
+                            </div>
+                        </div>
                     </div>
+                    <button onClick={logout} style={{ backgroundColor: '#666', alignSelf: 'flex-start' }}>Logout</button>
                 </div>
-                <button onClick={logout} style={{ backgroundColor: '#666' }}>Logout</button>
             </header>
 
             <div className="content">
