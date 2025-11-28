@@ -24,7 +24,7 @@ export default function Login() {
 
     return (
         <div className="container" style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>🎄 Christmas List App 🎄</h1>
+            <h1>🎄 Listy Christmas 🎄</h1>
             <p>Sign in to manage your lists and see what others want!</p>
             <button onClick={handleLogin} style={{ fontSize: '1.2rem', padding: '15px 30px' }}>
                 Sign in with Google

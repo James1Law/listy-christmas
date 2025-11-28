@@ -76,7 +76,7 @@ export default function Home() {
         return (
             <div className="container">
                 <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                    <h1>Christmas List App</h1>
+                    <h1>Listy Christmas</h1>
                     <button onClick={logout} style={{ backgroundColor: '#666' }}>Logout</button>
                 </header>
                 <Onboarding onComplete={handleOnboardingComplete} />
@@ -89,7 +89,7 @@ export default function Home() {
             <header style={{ marginBottom: '2rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px', gap: '10px' }}>
                     <div style={{ flex: '1 1 auto', minWidth: '200px' }}>
-                        <h1 style={{ margin: '0 0 5px 0' }}>Christmas List App</h1>
+                        <h1 style={{ margin: '0 0 5px 0' }}>Listy Christmas</h1>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: '#666' }}>
                             <span>Family ID:</span>
                             <div style={{
