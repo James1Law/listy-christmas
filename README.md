@@ -1,4 +1,4 @@
-# 🎄 Christmas Gift List App
+# 🎄 Listy Christmas
 
 A mobile-first web application for managing family Christmas wishlists. Create lists, add items, and shop for loved ones—with a surprise-preserving visibility system that hides "bought" status from the list owner!
 
@@ -138,8 +138,8 @@ service cloud.firestore {
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18 + Vite
-- **Routing**: React Router v6
+- **Frontend**: React 19 + Vite 7
+- **Routing**: React Router v7
 - **Authentication**: Firebase Auth (Google Sign-In)
 - **Database**: Firestore
 - **Icons**: Lucide React
