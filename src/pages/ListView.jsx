@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getList, getListItems, addItem, updateItem, deleteItem, deleteList } from '../lib/db';
-import { Trash2, Gift, Check, ExternalLink } from 'lucide-react';
+import { Trash2, Gift, Check, ExternalLink, ArrowLeft } from 'lucide-react';
+import './ListView.css';
 
 export default function ListView() {
     const { listId } = useParams();
@@ -54,14 +55,14 @@ export default function ListView() {
     }
 
     async function handleDeleteItem(itemId) {
-        if (window.confirm('Are you sure you want to delete this item?')) {
+        if (window.confirm('⚠ DELETE ITEM? This action cannot be undone.')) {
             await deleteItem(itemId);
             loadData();
         }
     }
 
     async function handleDeleteList() {
-        if (window.confirm('Are you sure you want to delete this entire list? This cannot be undone.')) {
+        if (window.confirm('⚠ DELETE ENTIRE LIST? This action cannot be undone.')) {
             await deleteList(listId);
             navigate('/');
         }
@@ -82,137 +83,157 @@ export default function ListView() {
         loadData();
     }
 
-    if (loading) return <div>Loading...</div>;
-    if (!list) return <div>List not found</div>;
+    if (loading) {
+        return (
+            <>
+                <div className="scan-lines"></div>
+                <div className="loading-container">
+                    <div className="retro-spinner"></div>
+                    <p className="loading-text">Loading List...</p>
+                </div>
+            </>
+        );
+    }
+
+    if (!list) {
+        return (
+            <>
+                <div className="scan-lines"></div>
+                <div className="listview-container">
+                    <p className="empty-items">List not found</p>
+                </div>
+            </>
+        );
+    }
 
     const isOwner = currentUser.uid === list.ownerId;
 
     return (
-        <div className="container">
-            <button onClick={() => navigate('/')} style={{ marginBottom: '20px', backgroundColor: 'transparent', color: '#666', padding: '5px 0' }}>
-                &larr; Back to Lists
-            </button>
+        <>
+            <div className="scan-lines"></div>
+            <div className="listview-container">
+                <button onClick={() => navigate('/')} className="back-btn">
+                    <ArrowLeft size={16} />
+                    Back to Lists
+                </button>
 
-            <header style={{ marginBottom: '30px', borderBottom: '1px solid #eee', paddingBottom: '20px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <div>
-                        <h1>{list.title}</h1>
-                        <p style={{ color: '#666', margin: 0 }}>Owned by {isOwner ? 'You' : list.ownerName}</p>
+                <header className="list-header">
+                    <div className="list-header-top">
+                        <div className="list-header-left">
+                            <h1 className="list-title">{list.title}</h1>
+                            <p className="list-owner">
+                                Owned by {isOwner ? 'You' : list.ownerName}
+                            </p>
+                        </div>
+                        {isOwner && (
+                            <button
+                                onClick={handleDeleteList}
+                                className="retro-btn retro-btn-danger delete-list-btn"
+                            >
+                                Delete List
+                            </button>
+                        )}
                     </div>
-                    {isOwner && (
-                        <button
-                            onClick={handleDeleteList}
-                            style={{
-                                backgroundColor: '#fff',
-                                color: '#d42426',
-                                border: '2px solid #d42426',
-                                padding: '8px 16px',
-                                fontSize: '0.9rem'
-                            }}
+                </header>
+
+                {isOwner && (
+                    <div className="add-item-form">
+                        <h3 className="add-item-title">Add Item</h3>
+                        <form onSubmit={handleAddItem}>
+                            <input
+                                type="text"
+                                placeholder="Item Name (e.g. Red Sweater)"
+                                value={newItemName}
+                                onChange={(e) => setNewItemName(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Link (optional)"
+                                value={newItemLink}
+                                onChange={(e) => setNewItemLink(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Price (optional)"
+                                value={newItemPrice}
+                                onChange={(e) => setNewItemPrice(e.target.value)}
+                            />
+                            <button type="submit" className="retro-btn">
+                                Add Wish
+                            </button>
+                        </form>
+                    </div>
+                )}
+
+                <div className="items-list">
+                    {items.map(item => (
+                        <div
+                            key={item.id}
+                            className={`item-card ${item.isBought && !isOwner ? 'bought' : ''}`}
                         >
-                            Delete List
-                        </button>
-                    )}
-                </div>
-            </header>
+                            <div className="item-content">
+                                <div className="item-header">
+                                    <h3 className={`item-name ${item.isBought && !isOwner ? 'bought' : ''}`}>
+                                        {item.name}
+                                    </h3>
+                                    {item.link && (
+                                        <a
+                                            href={item.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="item-link"
+                                        >
+                                            <ExternalLink size={16} />
+                                        </a>
+                                    )}
+                                </div>
+                                {item.price && (
+                                    <p className="item-price">{item.price}</p>
+                                )}
 
-            {isOwner && (
-                <div style={{ marginBottom: '30px', padding: '20px', backgroundColor: '#fff', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                    <h3>Add Item</h3>
-                    <form onSubmit={handleAddItem} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <input
-                            type="text"
-                            placeholder="Item Name (e.g. Red Sweater)"
-                            value={newItemName}
-                            onChange={(e) => setNewItemName(e.target.value)}
-                            style={{ padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Link (optional)"
-                            value={newItemLink}
-                            onChange={(e) => setNewItemLink(e.target.value)}
-                            style={{ padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Price (optional)"
-                            value={newItemPrice}
-                            onChange={(e) => setNewItemPrice(e.target.value)}
-                            style={{ padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}
-                        />
-                        <button type="submit" style={{ marginTop: '10px' }}>Add Wish</button>
-                    </form>
-                </div>
-            )}
-
-            <div className="items-list" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                {items.map(item => (
-                    <div key={item.id} style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '20px',
-                        backgroundColor: '#fff',
-                        borderRadius: '10px',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                        opacity: (item.isBought && !isOwner) ? 0.7 : 1
-                    }}>
-                        <div style={{ flex: 1 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <h3 style={{ margin: '0 0 5px 0', textDecoration: (item.isBought && !isOwner) ? 'line-through' : 'none' }}>
-                                    {item.name}
-                                </h3>
-                                {item.link && (
-                                    <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ color: '#666' }}>
-                                        <ExternalLink size={16} />
-                                    </a>
+                                {!isOwner && item.isBought && (
+                                    <p className="item-bought-status">
+                                        <Gift size={14} />
+                                        Bought by {item.boughtByName}
+                                    </p>
                                 )}
                             </div>
-                            {item.price && <p style={{ margin: 0, color: '#666', fontSize: '0.9rem' }}>{item.price}</p>}
 
-                            {!isOwner && item.isBought && (
-                                <p style={{ margin: '5px 0 0 0', color: 'var(--secondary-color)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-                                    <Gift size={14} style={{ marginRight: '5px', verticalAlign: 'text-bottom' }} />
-                                    Bought by {item.boughtByName}
-                                </p>
-                            )}
+                            <div className="item-actions">
+                                {item.createdBy === currentUser.uid ? (
+                                    <button
+                                        onClick={() => handleDeleteItem(item.id)}
+                                        className="delete-item-btn"
+                                        title="Delete item"
+                                    >
+                                        <Trash2 size={20} />
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={() => toggleBought(item)}
+                                        className={`mark-bought-btn ${item.isBought ? 'bought' : ''}`}
+                                    >
+                                        {item.isBought ? (
+                                            <>
+                                                <Check size={20} />
+                                                Bought
+                                            </>
+                                        ) : (
+                                            'Mark Bought'
+                                        )}
+                                    </button>
+                                )}
+                            </div>
                         </div>
+                    ))}
 
-                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            {item.createdBy === currentUser.uid ? (
-                                <button
-                                    onClick={() => handleDeleteItem(item.id)}
-                                    style={{ backgroundColor: '#fff', color: '#d42426', padding: '8px', border: '1px solid #d42426' }}
-                                >
-                                    <Trash2 size={20} />
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={() => toggleBought(item)}
-                                    style={{
-                                        backgroundColor: item.isBought ? '#165b33' : '#fff',
-                                        color: item.isBought ? '#fff' : '#165b33',
-                                        border: '2px solid #165b33',
-                                        padding: '8px 15px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '5px'
-                                    }}
-                                >
-                                    {item.isBought ? <Check size={20} /> : 'Mark Bought'}
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                ))}
-
-                {items.length === 0 && (
-                    <p style={{ textAlign: 'center', color: '#666', marginTop: '20px' }}>
-                        {isOwner ? "Your list is empty. Add some wishes!" : "This list is empty."}
-                    </p>
-                )}
+                    {items.length === 0 && (
+                        <p className="empty-items">
+                            {isOwner ? "Your list is empty. Add some wishes!" : "This list is empty."}
+                        </p>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 }

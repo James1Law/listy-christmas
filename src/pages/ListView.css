@@ -1,0 +1,384 @@
+/* ListView Page - Retro-Futurism Styling */
+
+.listview-container {
+  min-height: 100vh;
+  padding: var(--space-lg);
+  position: relative;
+}
+
+/* Back button */
+.back-btn {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  font-size: var(--text-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+  transition: all var(--transition-base);
+}
+
+.back-btn:hover {
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  transform: translateX(-2px);
+}
+
+/* List header */
+.list-header {
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--neon-cyan);
+  box-shadow: 0 1px 0 0 var(--neon-cyan);
+}
+
+.list-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.list-header-left {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.list-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-sm) 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.list-owner {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+  font-family: var(--font-mono);
+}
+
+.list-owner::before {
+  content: '>';
+  color: var(--neon-cyan);
+  margin-right: var(--space-xs);
+}
+
+.delete-list-btn {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+  border: 2px solid var(--danger);
+  background: transparent;
+  color: var(--danger);
+  box-shadow: 0 0 5px rgba(255, 0, 85, 0.3);
+  min-height: 36px;
+}
+
+.delete-list-btn:hover {
+  background: rgba(255, 0, 85, 0.1);
+  box-shadow: 0 0 10px var(--danger);
+}
+
+/* Add item form */
+.add-item-form {
+  margin-bottom: var(--space-2xl);
+  padding: var(--space-lg);
+  background: rgba(26, 31, 58, 0.6);
+  border: 1px solid var(--neon-cyan);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  position: relative;
+}
+
+.add-item-form::before,
+.add-item-form::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--neon-cyan);
+}
+
+.add-item-form::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.add-item-form::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.add-item-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-md) 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.add-item-form form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.add-item-form input {
+  width: 100%;
+}
+
+.add-item-form button {
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+
+/* Items list */
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Item card */
+.item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: rgba(26, 31, 58, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--neon-cyan);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 0 10px rgba(0, 255, 255, 0.2),
+    inset 0 0 20px rgba(0, 255, 255, 0.05);
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.item-card::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--neon-cyan);
+  border-left: none;
+  border-top: none;
+  box-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.item-card.bought {
+  opacity: 0.7;
+  border-color: var(--success);
+}
+
+.item-card.bought::after {
+  border-color: var(--success);
+  box-shadow: 0 0 5px var(--success);
+}
+
+.item-card:hover {
+  border-color: var(--neon-blue);
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.3),
+    inset 0 0 25px rgba(0, 255, 255, 0.1);
+  transform: translateX(2px);
+}
+
+.item-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.item-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.item-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.item-name.bought {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.item-link {
+  color: var(--neon-blue);
+  display: inline-flex;
+  align-items: center;
+  transition: all var(--transition-fast);
+}
+
+.item-link:hover {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.item-price {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+}
+
+.item-bought-status {
+  margin: var(--space-xs) 0 0 0;
+  color: var(--success);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  text-shadow: 0 0 5px var(--success);
+}
+
+/* Item actions */
+.item-actions {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.delete-item-btn {
+  padding: var(--space-sm);
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  min-width: 36px;
+  box-shadow: 0 0 5px rgba(255, 0, 85, 0.3);
+}
+
+.delete-item-btn:hover {
+  background: rgba(255, 0, 85, 0.1);
+  box-shadow: 0 0 10px var(--danger);
+}
+
+.mark-bought-btn {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+  border: 2px solid var(--success);
+  background: transparent;
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 36px;
+  box-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
+}
+
+.mark-bought-btn:hover {
+  background: rgba(0, 255, 136, 0.1);
+  box-shadow: 0 0 10px var(--success);
+}
+
+.mark-bought-btn.bought {
+  background: rgba(0, 255, 136, 0.2);
+  box-shadow: 0 0 10px var(--success);
+}
+
+/* Empty state */
+.empty-items {
+  text-align: center;
+  color: var(--text-muted);
+  margin-top: var(--space-3xl);
+  padding: var(--space-2xl);
+  font-family: var(--font-mono);
+}
+
+.empty-items::before {
+  content: '>';
+  display: block;
+  color: var(--neon-cyan);
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-md);
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+/* Loading state */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.loading-text {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .listview-container {
+    padding: var(--space-md);
+  }
+
+  .list-header-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .delete-list-btn {
+    width: 100%;
+  }
+
+  .item-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .mark-bought-btn {
+    flex: 1;
+  }
+
+  .list-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+
+  .item-name {
+    font-size: var(--text-base);
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createFamily, joinFamily, updateUserFamily } from '../lib/db';
 import { useAuth } from '../contexts/AuthContext';
+import './Onboarding.css';
 
 export default function Onboarding({ onComplete }) {
     const { currentUser } = useAuth();
@@ -15,7 +16,7 @@ export default function Onboarding({ onComplete }) {
             await updateUserFamily(currentUser.uid, newFamilyId);
             onComplete(newFamilyId);
         } catch (err) {
-            setError('Failed to create family');
+            setError('SYSTEM ERROR: Failed to create family');
             console.error(err);
         }
     }
@@ -27,22 +28,30 @@ export default function Onboarding({ onComplete }) {
                 await updateUserFamily(currentUser.uid, familyId);
                 onComplete(familyId);
             } else {
-                setError('Family not found');
+                setError('ERROR: Family not found');
             }
         } catch (err) {
-            setError('Failed to join family');
+            setError('SYSTEM ERROR: Failed to join family');
             console.error(err);
         }
     }
 
     if (mode === 'initial') {
         return (
-            <div style={{ textAlign: 'center' }}>
-                <h2>Welcome!</h2>
-                <p>To get started, you need to be part of a family group.</p>
-                <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '20px' }}>
-                    <button onClick={() => setMode('create')}>Create a New Family</button>
-                    <button onClick={() => setMode('join')} style={{ backgroundColor: '#165b33' }}>Join Existing Family</button>
+            <div className="onboarding-container">
+                <div className="onboarding-panel">
+                    <h2 className="onboarding-title">Welcome!</h2>
+                    <p className="onboarding-description">
+                        Initialize family system to continue
+                    </p>
+                    <div className="onboarding-buttons">
+                        <button onClick={() => setMode('create')} className="retro-btn">
+                            Create New Family
+                        </button>
+                        <button onClick={() => setMode('join')} className="retro-btn retro-btn-secondary">
+                            Join Existing Family
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -50,37 +59,57 @@ export default function Onboarding({ onComplete }) {
 
     if (mode === 'create') {
         return (
-            <div style={{ textAlign: 'center' }}>
-                <h2>Create Family</h2>
-                <input
-                    type="text"
-                    placeholder="Family Name (e.g. The Smiths)"
-                    value={familyName}
-                    onChange={(e) => setFamilyName(e.target.value)}
-                    style={{ padding: '10px', marginRight: '10px' }}
-                />
-                <button onClick={handleCreate}>Create</button>
-                <button onClick={() => setMode('initial')} style={{ marginLeft: '10px', backgroundColor: '#999' }}>Cancel</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div className="onboarding-container">
+                <div className="onboarding-panel">
+                    <h2 className="onboarding-title">Create Family</h2>
+                    <div className="onboarding-form">
+                        <input
+                            type="text"
+                            placeholder="Family Name (e.g. The Smiths)"
+                            value={familyName}
+                            onChange={(e) => setFamilyName(e.target.value)}
+                        />
+                        <div className="onboarding-form-buttons">
+                            <button onClick={handleCreate} className="retro-btn">
+                                Create
+                            </button>
+                            <button onClick={() => setMode('initial')} className="retro-btn retro-btn-secondary">
+                                Cancel
+                            </button>
+                        </div>
+                        {error && <p className="onboarding-error">{error}</p>}
+                    </div>
+                </div>
             </div>
         );
     }
 
     if (mode === 'join') {
         return (
-            <div style={{ textAlign: 'center' }}>
-                <h2>Join Family</h2>
-                <p>Ask a family member for their Family ID.</p>
-                <input
-                    type="text"
-                    placeholder="Family ID"
-                    value={familyId}
-                    onChange={(e) => setFamilyId(e.target.value)}
-                    style={{ padding: '10px', marginRight: '10px' }}
-                />
-                <button onClick={handleJoin}>Join</button>
-                <button onClick={() => setMode('initial')} style={{ marginLeft: '10px', backgroundColor: '#999' }}>Cancel</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div className="onboarding-container">
+                <div className="onboarding-panel">
+                    <h2 className="onboarding-title">Join Family</h2>
+                    <p className="onboarding-description">
+                        Request Family ID from existing member
+                    </p>
+                    <div className="onboarding-form">
+                        <input
+                            type="text"
+                            placeholder="Family ID"
+                            value={familyId}
+                            onChange={(e) => setFamilyId(e.target.value)}
+                        />
+                        <div className="onboarding-form-buttons">
+                            <button onClick={handleJoin} className="retro-btn">
+                                Join
+                            </button>
+                            <button onClick={() => setMode('initial')} className="retro-btn retro-btn-secondary">
+                                Cancel
+                            </button>
+                        </div>
+                        {error && <p className="onboarding-error">{error}</p>}
+                    </div>
+                </div>
             </div>
         );
     }

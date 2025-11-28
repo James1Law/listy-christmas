@@ -1,0 +1,139 @@
+/* Onboarding Component - Retro-Futurism Styling */
+
+.onboarding-container {
+  text-align: center;
+  padding: var(--space-2xl);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.onboarding-panel {
+  background: rgba(26, 31, 58, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--neon-cyan);
+  border-radius: var(--radius-md);
+  padding: var(--space-2xl);
+  box-shadow:
+    0 0 10px rgba(0, 255, 255, 0.2),
+    inset 0 0 20px rgba(0, 255, 255, 0.05);
+  position: relative;
+}
+
+/* Corner brackets */
+.onboarding-panel::before,
+.onboarding-panel::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.onboarding-panel::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.onboarding-panel::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.onboarding-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-md) 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.onboarding-description {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+  font-size: var(--text-base);
+}
+
+.onboarding-description::before {
+  content: '>';
+  color: var(--neon-cyan);
+  margin-right: var(--space-xs);
+}
+
+/* Button group */
+.onboarding-buttons {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  margin-top: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.onboarding-buttons button {
+  flex: 1 1 auto;
+  min-width: 150px;
+}
+
+/* Form inputs */
+.onboarding-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.onboarding-form input {
+  width: 100%;
+}
+
+.onboarding-form-buttons {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.onboarding-form-buttons button {
+  flex: 1;
+}
+
+/* Error message */
+.onboarding-error {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  background: rgba(255, 0, 85, 0.1);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-shadow: 0 0 5px var(--danger);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .onboarding-container {
+    padding: var(--space-lg);
+  }
+
+  .onboarding-panel {
+    padding: var(--space-xl);
+  }
+
+  .onboarding-buttons {
+    flex-direction: column;
+  }
+
+  .onboarding-buttons button {
+    width: 100%;
+  }
+
+  .onboarding-form-buttons {
+    flex-direction: column;
+  }
+}

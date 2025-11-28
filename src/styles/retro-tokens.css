@@ -1,0 +1,97 @@
+/* Retro-Futurism Design Tokens */
+/* Cyberpunk color palette with neon accents */
+
+:root {
+  /* === Dark Backgrounds === */
+  --cyber-bg-dark: #0a0e27;        /* Deep space blue - main background */
+  --cyber-bg-medium: #1a1f3a;      /* Medium background - cards */
+  --cyber-bg-light: #2a3254;       /* Light background - hover states */
+
+  /* === Neon Colors (Primary) === */
+  --neon-cyan: #00ffff;            /* Primary neon - buttons, borders, main accent */
+  --neon-magenta: #ff00ff;         /* Secondary neon - accents, glitch effects */
+  --neon-pink: #ff006e;            /* Tertiary - highlights, danger actions */
+  --neon-blue: #00d9ff;            /* Links, info states */
+  --neon-purple: #bd00ff;          /* Special states, hover effects */
+
+  /* === Holographic Gradients === */
+  --hologram-1: #00fff2;           /* Holographic gradient start (cyan) */
+  --hologram-2: #b721ff;           /* Holographic gradient middle (purple) */
+  --hologram-3: #ff006e;           /* Holographic gradient end (pink) */
+
+  /* === UI Overlays === */
+  --grid-line: rgba(0, 255, 255, 0.2);     /* Grid overlay lines */
+  --scan-line: rgba(0, 255, 255, 0.05);    /* Scan line overlay */
+
+  /* === Text Colors === */
+  --text-primary: #e0e0e0;         /* Main text - light gray */
+  --text-secondary: #00ffff;       /* Highlighted/interactive text - neon cyan */
+  --text-muted: #6b7280;           /* Muted/disabled text - dark gray */
+  --text-emphasis: #ffffff;        /* Maximum emphasis - pure white */
+
+  /* === State Colors === */
+  --danger: #ff0055;               /* Delete/error states - neon red */
+  --success: #00ff88;              /* Success states - neon green */
+  --warning: #ffaa00;              /* Warning states - neon orange */
+  --info: #00d9ff;                 /* Info states - bright cyan */
+
+  /* === Spacing Scale === */
+  --space-xs: 0.25rem;   /* 4px */
+  --space-sm: 0.5rem;    /* 8px */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2rem;      /* 32px */
+  --space-2xl: 3rem;     /* 48px */
+  --space-3xl: 4rem;     /* 64px */
+
+  /* === Typography Scale === */
+  --text-xs: 0.75rem;    /* 12px - Small labels */
+  --text-sm: 0.875rem;   /* 14px - Secondary text */
+  --text-base: 1rem;     /* 16px - Body text */
+  --text-lg: 1.125rem;   /* 18px - Large text */
+  --text-xl: 1.25rem;    /* 20px - Small headings */
+  --text-2xl: 1.5rem;    /* 24px - Section headings */
+  --text-3xl: 2rem;      /* 32px - Page headings */
+  --text-4xl: 2.5rem;    /* 40px - Hero text */
+  --text-5xl: 3rem;      /* 48px - Display text */
+
+  /* === Border Radius === */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* === Shadows === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.7);
+
+  /* === Neon Glow Shadows === */
+  --glow-cyan-sm: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-cyan);
+  --glow-cyan-md: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+  --glow-cyan-lg: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+  --glow-cyan-xl: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan), 0 0 60px var(--neon-cyan);
+
+  --glow-magenta-sm: 0 0 5px var(--neon-magenta), 0 0 10px var(--neon-magenta);
+  --glow-magenta-md: 0 0 10px var(--neon-magenta), 0 0 20px var(--neon-magenta);
+
+  --glow-pink-sm: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+  --glow-pink-md: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+
+  --glow-success-sm: 0 0 5px var(--success), 0 0 10px var(--success);
+  --glow-danger-sm: 0 0 5px var(--danger), 0 0 10px var(--danger);
+
+  /* === Z-Index Scale === */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-tooltip: 500;
+  --z-scanlines: 9999;  /* Scan lines should be on top of everything */
+
+  /* === Transitions === */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}

@@ -14,7 +14,7 @@ npm run lint         # Run ESLint
 
 ## Architecture Overview
 
-This is a React + Firebase Christmas wishlist app with a family-sharing system. The key architectural concept is **surprise-preserving visibility**: list owners cannot see which items have been marked as "bought" by family members, but family members can see each other's purchases to avoid duplicates.
+This is a React + Firebase family list sharing app with a **retro-futurism/cyberpunk aesthetic**. The key architectural concept is **surprise-preserving visibility**: list owners cannot see which items have been marked as "bought" by family members, but family members can see each other's purchases to avoid duplicates.
 
 ### Core Data Model
 
@@ -35,7 +35,7 @@ The app uses **four Firestore collections** with relationships:
 
 ### Visibility Logic (Critical Business Rule)
 
-Located in `src/pages/ListView.jsx:88-89`:
+Located in `src/pages/ListView.jsx:109`:
 ```javascript
 const isOwner = currentUser.uid === list.ownerId;
 ```
@@ -43,7 +43,7 @@ const isOwner = currentUser.uid === list.ownerId;
 **If owner:** Can add/delete items, but CANNOT see `item.isBought` status or who bought items
 **If not owner:** Can mark items as bought/unbought, sees "Bought by X" label
 
-This is enforced purely client-side - line 174-179 conditionally renders purchase info only for non-owners. There are no Firestore security rules in development (must be added for production per README).
+This is enforced purely client-side - conditionally renders purchase info only for non-owners. There are no Firestore security rules in development (must be added for production per README).
 
 ### State Management
 
@@ -59,7 +59,7 @@ Firebase config is **hardcoded** in `src/lib/firebase.js:6-14`. For deployment t
 2. Enable Google Auth in Firebase Console
 3. Enable Firestore Database
 4. Add Vercel domain to Firebase authorized domains
-5. Implement production Firestore security rules (see README lines 93-121)
+5. Implement production Firestore security rules (see README)
 
 ### Routing Structure
 
@@ -77,25 +77,87 @@ All routes except `/login` are wrapped in `PrivateRoute` which redirects to logi
 - `src/pages/Home.jsx` - Family onboarding and list dashboard
 - `src/contexts/AuthContext.jsx` - Global authentication state
 
-### Styling
+### Styling - Retro-Futurism Design System
 
-- Uses plain CSS in `src/styles/index.css` and inline styles
+**Aesthetic:** Cyberpunk/Retro-Futurism (inspired by Blade Runner, Tron, Cyberpunk 2077)
+
+**Architecture:**
+- Modular CSS design system in `src/styles/`
+- Component-specific CSS files co-located with components
 - Mobile-first responsive design
-- CSS variables: `--primary-color` (#165b33 green), `--secondary-color` (#d42426 red)
-- Christmas theme with Lato font (lines in index.css)
+- Dark theme with neon accents
 
-## Current Work
+**Design System Files:**
+- `src/styles/retro-tokens.css` - Color palette, spacing, typography scale, shadows
+- `src/styles/retro-fonts.css` - Font imports (Orbitron, Rajdhani, Share Tech Mono) and utilities
+- `src/styles/retro-effects.css` - Visual effects (neon glows, scan lines, glitch, grids, holograms)
+- `src/styles/index.css` - Global styles, base components (buttons, inputs), utilities
+
+**Component Styles:**
+- `src/pages/Login.css` - Login page styling
+- `src/pages/Home.css` - Home dashboard styling
+- `src/pages/ListView.css` - List view and item cards
+- `src/components/Onboarding.css` - Onboarding panels
+
+**Color Palette:**
+```css
+--cyber-bg-dark: #0a0e27;       /* Main background */
+--cyber-bg-medium: #1a1f3a;     /* Cards */
+--neon-cyan: #00ffff;           /* Primary accent */
+--neon-magenta: #ff00ff;        /* Secondary accent */
+--neon-pink: #ff006e;           /* Highlights */
+--text-primary: #e0e0e0;        /* Light text */
+--text-secondary: #00ffff;      /* Interactive text */
+```
+
+**Typography:**
+- Headers: Orbitron (geometric, futuristic)
+- Body: Rajdhani (clean, sci-fi)
+- Monospace: Share Tech Mono (terminal-style)
+
+**Visual Effects:**
+- ✨ Neon glows with multi-layer text-shadow and box-shadow
+- 📺 Scan lines overlay (fixed position, animated)
+- ⚡ Glitch animations (RGB split with pseudo-elements)
+- 🌈 Holographic gradients (cyan-magenta-pink)
+- 🔲 Animated grid backgrounds (Tron-style)
+- 💫 Pulse animations on interactive elements
+- 🔺 Corner brackets for cyberpunk aesthetic
+
+**Component Patterns:**
+- Dark transparent cards with neon borders: `.retro-card`
+- Neon outlined buttons with sweep effects: `.retro-btn`
+- Form inputs with neon focus states: `input`, `textarea`
+- Loading spinners with rotating borders: `.retro-spinner`
+- Empty states with terminal-style prompts
+
+## Current Status
+
+### Branding ✅ COMPLETED
+- App name: **"Listy"** (rebranded from "Listy Christmas")
+- Browser title: "Listy"
+- Favicon: Custom retro-futurism SVG with neon triangle and "L"
+- Logo: **▲ LISTY ▲** with neon cyan glow and pulse animation
+- Theme: Full retro-futurism/cyberpunk aesthetic
+
+### UI Overhaul ✅ COMPLETED
+- Complete CSS design system implemented
+- All pages converted to dark theme with neon accents
+- Improved text contrast and readability
+- Mobile-responsive retro styling
+- Accessibility features (reduced motion, WCAG AA contrast)
 
 ### Active Planning Documents
-- `PRD.md` - Product Requirements Document for app improvements (branding ✅, icons ✅, mobile UX 🚧)
-- `IMPLEMENTATION_PLAN.md` - Detailed TDD implementation plan with task breakdown
+- `PRD_RETRO_FUTURISM.md` - Product requirements for retro-futurism overhaul
+- `IMPLEMENTATION_PLAN_RETRO.md` - 8-phase TDD implementation plan
+- `RETRO_UI_RESEARCH.md` - Research on retro aesthetic options
 
-### Branding ✅ COMPLETED (Commit: f25d576)
-- App name: "Listy Christmas"
-- Browser title: "Listy Christmas"
-- Visual identity: Christmas tree icon/emoji 🎄 (SVG data URI favicon)
-- All headers updated across Login, Home, and Onboarding pages
-- Color scheme: Green (#165b33) and Red (#d42426) festive theme
-
-### Remaining Work
-- Mobile UI/UX optimization audit and implementation
+### Implementation Notes
+When making changes to the UI:
+1. Follow the retro-futurism design patterns in existing components
+2. Use design tokens from `retro-tokens.css` (never hardcode colors)
+3. Apply neon glow effects to interactive elements
+4. Include corner brackets on panels and cards
+5. Ensure WCAG AA contrast ratios (light text on dark backgrounds)
+6. Support `prefers-reduced-motion` for accessibility
+7. Maintain mobile-first responsive design

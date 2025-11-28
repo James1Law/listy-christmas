@@ -1,16 +1,41 @@
-# 🎄 Listy Christmas
+# ▲ Listy ▲
 
-A mobile-first web application for managing family Christmas wishlists. Create lists, add items, and shop for loved ones—with a surprise-preserving visibility system that hides "bought" status from the list owner!
+A retro-futurism styled family list sharing application. Create wishlists, share with family members, and shop collaboratively—with a surprise-preserving visibility system that keeps purchases secret from list owners!
 
 ## ✨ Features
 
 - 🔐 **Google Authentication** - Secure sign-in with Firebase Auth
 - 👨‍👩‍👧‍👦 **Family Groups** - Create or join families to share lists
-- 📝 **Multiple Lists** - Create wishlists for yourself or your kids
+- 📝 **Multiple Lists** - Create wishlists for yourself or family members
 - 🎁 **Surprise Mode** - List owners can't see what's been bought for them
 - ✅ **Collaborative Shopping** - Family members can mark items as "bought"
-- 📱 **Mobile First** - Optimized for shopping on-the-go
-- 🎨 **Festive UI** - Christmas-themed design with custom fonts
+- 📱 **Mobile First** - Optimized for on-the-go list management
+- 🎨 **Retro-Futurism UI** - Cyberpunk-inspired design with neon glows, scan lines, and maximum visual effects
+- ⚡ **Maximum Effects** - Glitch animations, holographic gradients, and animated grids
+
+## 🎨 Design System
+
+**Aesthetic**: Retro-Futurism / Cyberpunk
+
+**Color Palette**:
+- Dark backgrounds: Deep space blue (#0a0e27)
+- Primary accent: Neon cyan (#00ffff)
+- Secondary accent: Neon magenta (#ff00ff)
+- Highlights: Neon pink (#ff006e)
+
+**Typography**:
+- Headers: [Orbitron](https://fonts.google.com/specimen/Orbitron) - Geometric, futuristic
+- Body: [Rajdhani](https://fonts.google.com/specimen/Rajdhani) - Clean, sci-fi inspired
+- Monospace: [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) - Terminal-style
+
+**Visual Effects**:
+- ✨ Neon glows with multi-layer shadows
+- 📺 Animated scan lines overlay
+- ⚡ Glitch effects (RGB split on text)
+- 🌈 Holographic gradients
+- 🔲 Tron-style animated grid backgrounds
+- 💫 Pulse animations on interactive elements
+- 🔺 Corner brackets for cyberpunk aesthetic
 
 ## 🚀 Quick Start
 
@@ -55,6 +80,8 @@ const firebaseConfig = {
 npm run dev
 ```
 
+The app will be available at `http://localhost:5173`
+
 ## 🌐 Deploy to Vercel
 
 ### Option 1: Deploy via Vercel Dashboard (Recommended)
@@ -98,21 +125,21 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-    
+
     // Family members can read family data
     match /families/{familyId} {
       allow read: if request.auth != null;
       allow write: if request.auth != null;
     }
-    
+
     // Family members can read all lists in their family
     match /lists/{listId} {
       allow read: if request.auth != null;
       allow create: if request.auth != null;
       allow update, delete: if request.auth != null && resource.data.ownerId == request.auth.uid;
     }
-    
-    // Family members can read/write items, but not see bought status if they're the owner
+
+    // Family members can read/write items
     match /items/{itemId} {
       allow read, write: if request.auth != null;
     }
@@ -129,6 +156,12 @@ service cloud.firestore {
 3. **List Owner** cannot see which items have been marked as bought (preserves the surprise!)
 4. **Other Family Members** can see who bought what (prevents duplicate purchases)
 
+This visibility logic is implemented in `src/pages/ListView.jsx:88-89`:
+```javascript
+const isOwner = currentUser.uid === list.ownerId;
+// Owners cannot see purchase status, others can
+```
+
 ### Sharing Your Family
 
 1. After creating a family, you'll see a **Family ID** on the dashboard
@@ -144,27 +177,54 @@ service cloud.firestore {
 - **Database**: Firestore
 - **Icons**: Lucide React
 - **Hosting**: Vercel
-- **Styling**: CSS (Mobile-first responsive design)
+- **Styling**: Custom CSS with retro-futurism design system
 
 ## 📂 Project Structure
 
 ```
 src/
-├── components/         # Reusable components
-│   ├── Onboarding.jsx # Family creation/join flow
-│   └── PrivateRoute.jsx
-├── contexts/          # React Context providers
-│   └── AuthContext.jsx
-├── lib/               # Utilities and config
-│   ├── firebase.js    # Firebase initialization
-│   └── db.js          # Firestore operations
-├── pages/             # Route pages
-│   ├── Home.jsx       # Dashboard with family lists
-│   ├── ListView.jsx   # Individual list with items
-│   └── Login.jsx      # Google sign-in page
-└── styles/
-    └── index.css      # Global styles
+├── components/           # Reusable components
+│   ├── Onboarding.jsx   # Family creation/join flow
+│   ├── Onboarding.css   # Onboarding retro styling
+│   └── PrivateRoute.jsx # Auth route protection
+├── contexts/            # React Context providers
+│   └── AuthContext.jsx  # Global auth state
+├── lib/                 # Utilities and config
+│   ├── firebase.js      # Firebase initialization
+│   └── db.js            # Firestore CRUD operations
+├── pages/               # Route pages
+│   ├── Home.jsx         # Dashboard with family lists
+│   ├── Home.css         # Home page retro styling
+│   ├── ListView.jsx     # Individual list with items
+│   ├── ListView.css     # List view retro styling
+│   ├── Login.jsx        # Google sign-in page
+│   └── Login.css        # Login page retro styling
+└── styles/              # Global design system
+    ├── retro-tokens.css # Color palette & design tokens
+    ├── retro-fonts.css  # Typography system
+    ├── retro-effects.css# Visual effects (glows, glitch, scan lines)
+    └── index.css        # Global styles & base components
 ```
+
+## 🎯 Design Philosophy
+
+**Listy** embraces a retro-futurism aesthetic inspired by:
+- Blade Runner (1982) - Neon city interfaces
+- Tron (1982) - Grid systems and glowing lines
+- Cyberpunk 2077 - Neon UI and glitch effects
+- Synthwave/Outrun - Neon colors and grid horizons
+- 80s sci-fi computer terminals
+
+The design combines nostalgic retro computing aesthetics with modern UX patterns, creating a unique and memorable visual identity while maintaining excellent usability and accessibility.
+
+## ♿ Accessibility
+
+- WCAG AA compliant color contrast ratios (4.5:1 minimum)
+- Keyboard navigation support
+- Focus indicators visible with neon glow
+- Reduced motion support via `prefers-reduced-motion`
+- Screen reader compatible
+- Mobile-friendly touch targets (minimum 44px)
 
 ## 🤝 Contributing
 
@@ -172,8 +232,8 @@ Contributions are welcome! Feel free to open issues or submit PRs.
 
 ## 📄 License
 
-MIT License - feel free to use this for your own family!
+MIT License - feel free to use this for your own family lists!
 
 ---
 
-Built with ❤️ for family holiday shopping
+Built with ⚡ using retro-futurism aesthetics • **▲ Listy ▲** - Your family list system
